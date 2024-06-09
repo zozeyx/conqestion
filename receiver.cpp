@@ -67,3 +67,15 @@ void receiver(Buffer *buffer, const char *output_filename) {
     // Send ACK (simplified)
     printf("ACK for packet %d\n", expected_packet_number);
 }
+
+int main() {
+    Buffer buffer = { .head = 0, .tail = 0, .count = 0 };
+    const char *output_filename = "output1.txt";
+
+    while (1) {
+        receiver(&buffer, output_filename);
+        sleep(1); // receiver rate
+    }
+
+    return 0;
+}

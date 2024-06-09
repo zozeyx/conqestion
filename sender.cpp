@@ -9,7 +9,6 @@
 #define PAYLOAD_SIZE 10
 #define CHECKSUM_SIZE 2
 #define PACKET_NUM_SIZE 2
-#define TIMEOUT 5 // seconds
 
 typedef struct {
     uint16_t packet_number;
@@ -67,4 +66,16 @@ void sender(Buffer *buffer, const char *filename) {
     buffer->packets[buffer->tail] = packet;
     buffer->tail = (buffer->tail + 1) % (BUFFER_SIZE / PACKET_SIZE);
     buffer->count++;
+}
+
+int main() {
+    Buffer buffer = { .head = 0, .tail = 0, .count = 0 };
+    const char *input_filename = "input1.txt";
+    
+    while (1) {
+        sender(&buffer, input_filename);
+        sleep(0.5); // sender rate
+    }
+    
+    return 0;
 }
